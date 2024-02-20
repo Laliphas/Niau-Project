@@ -9,7 +9,7 @@ export default function Product() {
       <Navigator/>
       <SearchBar/>
           <div className={styles.sug}>
-          <h4>  Suggestions</h4>
+          <h4>Suggestions</h4>
           </div>
     </div>
   )
