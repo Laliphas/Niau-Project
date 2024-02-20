@@ -1,4 +1,4 @@
-
+@media only screen and (max-width: 600px) {
 .navbar{ 
     height: 32px;
     width: 100%;
@@ -9,6 +9,7 @@
     font-size: 25px;
     top: 650px;
     left: 0px;
+}
 }
 .navbar a{
     color: black;
