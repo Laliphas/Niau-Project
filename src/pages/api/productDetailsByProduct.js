@@ -15,8 +15,12 @@ export default async function handler(req, res) {
             const product = await prisma.productDetail.findMany({
                 where: {
                     model: model
+                },
+                orderBy: {
+                    colorNumber: 'asc'
                 }
             });
+            
 
             if (!product) {
                 return res.status(404).json({ error: 'model not found' });
