@@ -11,3 +11,59 @@
   margin-left: 5%;
   font-size: 200%;
 }
+CSS
+.body {
+  background-color: #fff;
+  padding: 20px;
+}
+
+.sug {
+  border: 5px solid #ddd;
+  border-radius: 20px;
+  padding: 16px;
+}
+
+.sug h4 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.product:hover {
+  background-color: #f7f7f7;
+}
+
+.product img {
+  width: 80px;
+  height: 80px;
+  margin-right: 16px;
+}
+
+.productInfo {
+  flex-grow: 1;
+}
+
+.productInfo h5 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.productInfo h6 {
+  margin-top: 0;
+  margin-bottom: 4px;
+  color: #777;
+}
+
+.productInfo p {
+  margin-top: 0;
+  font-weight: bold;
+}
