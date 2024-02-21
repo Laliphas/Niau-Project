@@ -6,8 +6,9 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 export default function Product() {
 
-  const [productsData, setProductsData] = useState();
-
+  const [productsData, setProductsData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -22,14 +23,41 @@ export default function Product() {
     fetchData();
   }, []);
 
-  return (
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value.toLowerCase());
+  };
 
-    <div className={styles.body}>
-      <Navigator />
-      <SearchBar />
+  const filteredProducts = productsData.filter((product) => {
+    return (
+      product.brand.toLowerCase().includes(searchQuery) ||
+      product.model.toLowerCase().includes(searchQuery) ||
+      product.color.toLowerCase().includes(searchQuery)
+     );
+  });
+
+  return (
+   
+   <div className={styles.body}>
+    <Navigator/>
+      <SearchBar onChange={handleSearch} />
       <div className={styles.sug}>
         <h4>Suggestions</h4>
+        {isLoading ? (
+          <p>Loading products...</p>
+        ) : (
+          filteredProducts.map((product) => (
+            <div key={product.id} className={styles.product}>
+              {/* <img src={product.image} alt={product.brand} /> */}
+              <div className={styles.productInfo}>
+                <h5>{product.brand}</h5>
+                <h6>{product.model}</h6>
+                <p>฿{product.price}</p>
+              
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
-  )
-}
+  );
+};

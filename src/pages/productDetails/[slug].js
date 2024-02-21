@@ -94,7 +94,7 @@ export default function ProductDetails() {
                 </div>
                 <div className={styles.container}>
                     <div className={styles.boximg}>
-                        <img className={styles.img} src={`${process.env.NEXT_PUBLIC_API_BASE_URL_IMAGE}/${product[0]?.image}.png`} alt="image" />
+                        <img className={styles.img} loading='lazy' src={`${process.env.NEXT_PUBLIC_API_BASE_URL_IMAGE}/${product[0]?.image}.png`} alt="image" />
                     </div>
                 </div>
                 <div className={styles.content}>
