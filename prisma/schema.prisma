@@ -56,3 +56,8 @@ enum category {
   EyeShadow
 }
 
+model CapturedImage {
+  id        Int      @id @default(autoincrement())
+  imageData String
+}
+
