@@ -1,7 +1,7 @@
 import styles from "@/styles/Home.module.css";
 import React from "react";
-import Navigator from "../../../components/NavigatorBar";
-import SearchBar from "../../../components/Searchbar";
+import Navigator from "../../components/NavigatorBar";
+import SearchBar from "../../components/Searchbar";
 import { useState,useEffect } from "react";
 import axios from "axios";
 export default function Product() {
