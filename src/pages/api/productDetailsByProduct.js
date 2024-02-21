@@ -1,4 +1,4 @@
-// pages/api/products.js
+// pages/api/productDetailsByProduct.js
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -6,20 +6,20 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            const { productID } = req.query;
+            const { model } = req.query;
 
-            if (!productID) {
-                return res.status(400).json({ error: 'productID parameter is required' });
+            if (!model) {
+                return res.status(400).json({ error: 'model parameter is required' });
             }
 
-            const product = await prisma.productDetail.findUnique({
+            const product = await prisma.productDetail.findMany({
                 where: {
-                    productID: parseInt(productID)
+                    model: model
                 }
             });
 
             if (!product) {
-                return res.status(404).json({ error: 'Product not found' });
+                return res.status(404).json({ error: 'model not found' });
             }
 
             res.status(200).json(product);

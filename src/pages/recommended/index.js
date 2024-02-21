@@ -1,4 +1,4 @@
-import Navigator from "../../../components/NavigatorBar"
+import Navigator from "../../components/NavigatorBar"
 export default function recommend(){
     return(
         <div>
