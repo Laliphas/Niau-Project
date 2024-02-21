@@ -74,12 +74,12 @@ export default function ProductDetails() {
             const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/productDetailsByProduct?model=${encodedSlug}`);
             setProduct(response.data || mock);
         } catch (error) {
-            setProduct(mock);
+            // setProduct(mock);
             console.error('Error fetching product:', error);
         }
     };
     if (!product) {
-        setProduct(mock);
+        // setProduct(mock);
         return <div>Loading...</div>;
     }
 
@@ -89,7 +89,7 @@ export default function ProductDetails() {
                 <Link href="/" className={styles.back}>
                     Back
                 </Link>
-                <div className={styles.a}>
+                <div className={styles.header}>
                     <h1>{product[0]?.model}</h1>
                 </div>
                 <div className={styles.container}>
@@ -102,25 +102,25 @@ export default function ProductDetails() {
                         <div>{product[0]?.model} {product[0]?.amout} g</div>
                         <div><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402m5.726-20.583c-2.203 0-4.446 1.042-5.726 3.238-1.285-2.206-3.522-3.248-5.719-3.248-3.183 0-6.281 2.187-6.281 6.191 0 4.661 5.571 9.429 12 15.809 6.43-6.38 12-11.148 12-15.809 0-4.011-3.095-6.181-6.274-6.181" /></svg></div>
                     </div>
-                    <div className={styles.c}>
+                    <div>
                         Price : {product[0]?.price} baht
                     </div>
-                    <div className={styles.d}>
+                    <div>
                         Brand : {product[0]?.brand}
                     </div>
-                    <div className={styles.d}>
+                    <div>
                         Color : {product[0]?.colorNumber} {product[0]?.colorName} {product[0]?.color}
                     </div>
-                    <div className={styles.d}>
+                    <div>
                         Tone : {product[0]?.skinTone}
                     </div>
-                    <div className={styles.d}>
+                    <div>
                         Glowy : {product[0]?.glowy}/5
                     </div>
-                    <div className={styles.d}>
+                    <div>
                         Matte : {product[0]?.matte}/5
                     </div>
-                    <div className={styles.d}>
+                    <div>
                         Long Lasting : {product[0]?.longLasting}/5
                     </div>
                     <div className={styles.subheader}>
