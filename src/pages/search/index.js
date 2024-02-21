@@ -25,10 +25,10 @@ export default function Product() {
   return (
 
     <div className={styles.body}>
-      <Navigator />
       <SearchBar />
       <div className={styles.sug}>
         <h4>Suggestions</h4>
+      <Navigator />
       </div>
     </div>
   )
