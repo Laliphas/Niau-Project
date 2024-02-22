@@ -20,6 +20,7 @@ function CapturePic({ colors }) {
     const [imageSrc, setImageSrc] = useState();
     const [lipColor, setLipColor] = useState(colors[0]?.color || "");
     const [pictureTaken, setPictureTaken] = useState(false);
+    const [faceDetected, setFaceDetected] = useState(false);
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
 
@@ -121,7 +122,7 @@ function CapturePic({ colors }) {
                 ctx.closePath();
             });
             
-    
+            setFaceDetected(resizedDetections.length > 0); // Update face detection status
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             faceapi.draw.drawDetections(canvas, resizedDetections);
             faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
@@ -141,9 +142,6 @@ function CapturePic({ colors }) {
 
     return (
         <div>
-            <Head>
-                <title>TryOn | niau</title>
-            </Head>
             <div className={styles.insertImage}>
                 <input id="file" type="file" accept="image/*" style={{ display: 'none' }} />
                 {imageSrc && <img src={imageSrc} alt="Captured Image" />}
@@ -162,6 +160,7 @@ function CapturePic({ colors }) {
 
                 {pictureTaken && (
                     <div className={styles.colorSelection}>
+                        <p className='styles.Detect'>{faceDetected ? 'We found you' : 'No face detected. Please try again'}</p>
                         <select value={lipColor} onChange={(e) => setLipColor(e.target.value)}>
                             {colors.map((color) => (
                                 <option key={color.productID} value={color.color}>{color.color}</option>
