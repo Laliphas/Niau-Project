@@ -5,7 +5,6 @@ import Link from "next/link";
 import styles from "@/styles/Tryon.module.css";
 import { PrismaClient } from '@prisma/client';
 import Webcam from 'react-webcam';
-import { saveCapturedImage } from '@/pages/tryon/prismaClient'; // Import saveCapturedImage from prismaClient.js
 
 const prisma = new PrismaClient();
 
@@ -28,39 +27,22 @@ function CapturePic({ colors }) {
         facingMode: "user"
     };
 
-    useEffect(() => {
-        if (!imageSrc) return;
+    // Function to apply lip color filter
+    const applyLipFilter = () => {
+        // Apply the selected lip color filter to the captured image
+        // You can implement the logic to apply the lip color filter here
+        console.log('Applying lip color filter:', lipColor);
+    };
 
-        const fetchData = async () => {
-            try {
-                const response = await fetch('/api/upload', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        image: imageSrc // Correct variable name
-                    })
-                });
-                const data = await response.json();
-                setCldData(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, [imageSrc]);
-
+    // index.js
     const handleCaptureScreenshot = async () => {
         const image = webcamRef.current?.getScreenshot(); // Use optional chaining to avoid errors if webcamRef.current is null
         setImageSrc(image);
         console.log('image', image);
-        if (image) {
-            try {
-                await saveCapturedImage(image); // Save captured image to Prisma database
-            } catch (error) {
-                console.error('Error saving captured image:', error);
-            }
-        }
+        // Apply lip color filter
+        applyLipFilter();
     };
+
 
     return (
         <div>
