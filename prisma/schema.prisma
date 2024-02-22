@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,34 +8,34 @@ datasource db {
 }
 
 model User {
-  userid    Int     @id @default(autoincrement())
-  email String  @unique
-  username  String?
+  userid   Int     @id @default(autoincrement())
+  email    String  @unique
+  username String?
   password String?
-  role type @default(user)
-}
-
-enum type {
-  admin 
-  user
+  role     type    @default(user)
 }
 
 model ProductDetail {
-  productID Int    @id @default(autoincrement())
-  brand String
-  image String
-  model String?
-  color String
-  colorNumber String?
-  colorName String
-  glowy Int?
-  matte Int?
-  longLasting Int?
-  price  Float
-  amout Float
+  productID   Int      @id @default(autoincrement())
+  color       String
   whereToBuy  String
-  skinTone  Tone
+  skinTone    Tone
   productType category
+  model       String?
+  amout       Float
+  brand       String
+  colorName   String
+  colorNumber String?
+  glowy       Int?
+  image       String
+  longLasting Int?
+  matte       Int?
+  price       Float
+}
+
+enum type {
+  admin
+  user
 }
 
 enum Tone {
@@ -55,9 +52,3 @@ enum category {
   Powder
   EyeShadow
 }
-
-model CapturedImage {
-  id        Int      @id @default(autoincrement())
-  imageData String
-}
-
