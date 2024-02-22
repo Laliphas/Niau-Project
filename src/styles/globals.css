@@ -1,6 +1,13 @@
 body {
     background-color: #f6f1ee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
+  .back{
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-decoration: none;
+    margin: 24px 0 0 24px;
+    color: #1E1E1E;
+    font-size: 16px;
+    font-weight: 400;
+}

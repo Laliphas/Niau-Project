@@ -18,7 +18,8 @@
   }
   
   .product {
-    width: 300px;
+    width: 85%;
+    max-width: 350px;
     margin: 10px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -38,4 +39,14 @@
   
   .product p {
     margin-top: 5px;
+  }
+  .grid{
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+  .overall{
+    width: 95%;
   }
