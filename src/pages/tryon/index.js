@@ -66,10 +66,15 @@ function CapturePic({ colors }) {
     
                 if (detections.length > 0) {
                     const mouth = detections[0].landmarks.getMouth();
-    
-                    // Draw a rectangle representing lipstick on the lips
+
                     ctx.fillStyle = lipColor;
-                    ctx.fillRect(mouth[0].x, mouth[0].y, mouth[6].x - mouth[0].x, mouth[10].y - mouth[6].y);
+                    ctx.beginPath();
+                    ctx.moveTo(mouth[0].x, mouth[0].y);
+                    for (let i = 1; i < mouth.length; i++) {
+                        ctx.lineTo(mouth[i].x, mouth[i].y);
+                    }
+                    ctx.closePath();
+                    ctx.fill();
     
                     const updatedImageSrc = canvas.toDataURL('image/jpeg');
                     setImageSrc(updatedImageSrc);
@@ -105,11 +110,17 @@ function CapturePic({ colors }) {
 
             resizedDetections.forEach(detection => {
                 const mouth = detection.landmarks.getMouth();
-        
-                // Draw a rectangle around the mouth
-                const mouthRect = new faceapi.Rect(mouth[0].x, mouth[0].y, mouth[6].x - mouth[0].x, mouth[10].y - mouth[6].y);
-                faceapi.draw.drawDetections(canvas, [mouthRect]);
-              });
+                const ctx = canvas.getContext('2d');
+
+                // Draw mouth shape
+                ctx.beginPath();
+                ctx.moveTo(mouth[0].x, mouth[0].y);
+                for (let i = 1; i < mouth.length; i++) {
+                    ctx.lineTo(mouth[i].x, mouth[i].y);
+                }
+                ctx.closePath();
+            });
+            
     
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             faceapi.draw.drawDetections(canvas, resizedDetections);
