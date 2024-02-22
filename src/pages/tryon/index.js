@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Head from "next/head";
-import Image from "next/image";
+import Iamge from "next/image";
 import Link from "next/link";
 import styles from "@/styles/Tryon.module.css";
 import { PrismaClient } from '@prisma/client';
@@ -19,6 +19,7 @@ function CapturePic({ colors }) {
     const [imageSrc, setImageSrc] = useState(); // Define image state variable
     const [cldData, setCldData] = useState(null); // Define cldData state variable
     const [lipColor, setLipColor] = useState(colors[0]?.color || ""); // Set default lip color
+    const [pictureTaken, setPictureTaken] = useState(false); // Track if a picture has been taken
     const webcamRef = useRef(null); // Initialize webcamRef using useRef
 
     const videoConstraints = {
@@ -29,20 +30,30 @@ function CapturePic({ colors }) {
 
     // Function to apply lip color filter
     const applyLipFilter = () => {
-        // Apply the selected lip color filter to the captured image
-        // You can implement the logic to apply the lip color filter here
-        console.log('Applying lip color filter:', lipColor);
+        if (imageSrc) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                ctx.fillStyle = lipColor;
+                // Adjust these coordinates based on the position of the lips in the image
+                ctx.fillRect(100, 100, 50, 20); // Example: Draw a rectangle representing lipstick on the lips
+                const updatedImageSrc = canvas.toDataURL('image/jpeg');
+                setImageSrc(updatedImageSrc);
+            };
+            img.src = imageSrc;
+        }        
     };
 
     // index.js
     const handleCaptureScreenshot = async () => {
         const image = webcamRef.current?.getScreenshot(); // Use optional chaining to avoid errors if webcamRef.current is null
         setImageSrc(image);
-        console.log('image', image);
-        // Apply lip color filter
-        applyLipFilter();
+        setPictureTaken(true); // Indicate that a picture has been taken
     };
-
 
     return (
         <div>
@@ -51,7 +62,7 @@ function CapturePic({ colors }) {
             </Head>
             <div className={styles.insertImage}>
                 <input id="file" type="file" accept="image/*" style={{ display: 'none' }} />
-                {imageSrc && <img src={imageSrc} alt="Uploaded Image" />}
+                {imageSrc && <img src={imageSrc} alt="Cap Image" />}
                 {!imageSrc && <Webcam
                     audio={false}
                     height={500}
@@ -61,16 +72,19 @@ function CapturePic({ colors }) {
                     ref={webcamRef} // Assign webcamRef to the ref prop
                 />}
                 <button onClick={handleCaptureScreenshot}>Capture photo</button>
-                <button onClick={() => { setImageSrc(null); setCldData(null); }} color="red"> {/* Fix setting image state to null */}
+                <button onClick={() => { setImageSrc(null); setCldData(null); setPictureTaken(false); }} color="red"> {/* Fix setting image state to null */}
                     Reset
                 </button>
-                <select value={lipColor} onChange={(e) => setLipColor(e.target.value)}>
-                    {colors.map((color) => (
-                        <option key={color.productID} value={color.color}>{color.color}</option>
-                    ))}
-                </select>
-                {/* <button onClick={applyLipFilter}>Apply Lip Filter</button> */}
-                <div className={styles.colorBox} style={{ backgroundColor: lipColor }}></div>
+                {pictureTaken && (
+                    <div className={styles.colorSelection}>
+                        <select value={lipColor} onChange={(e) => setLipColor(e.target.value)}>
+                            {colors.map((color) => (
+                                <option key={color.productID} value={color.color}>{color.color}</option>
+                            ))}
+                        </select>
+                        <button onClick={applyLipFilter}>Apply Lip Filter</button>
+                    </div>
+                )}
             </div>
         </div>
     );
