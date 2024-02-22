@@ -35,13 +35,7 @@ export default function Product() {
     setSearchQuery(e.target.value.toLowerCase());
   };
 
-  // const filteredProducts = productsData.filter((product) => {
-  //   return (
-  //     product.brand.toLowerCase().includes(searchQuery) ||
-  //     product.model.toLowerCase().includes(searchQuery) ||
-  //     product.color.toLowerCase().includes(searchQuery)
-  //    );
-  // });
+
   useEffect(() => {
     setFilteredProducts(productsData.filter((product) => {
       return (
@@ -58,45 +52,47 @@ export default function Product() {
     }
   }, [filteredProducts])
   return (
-
-    <div className={styles.overall}>
-      <Link href="/" className='back'>
-        Back
-      </Link>
+    <>
       <Navigator />
-      <div className={styles_search.all}>
-        <div className={styles_search.searchBarContainer}>
-          <input onChange={handleSearch} type="text" className={styles_search.searchInput} placeholder="Search for your cosmetics" />
-          <button className={styles_search.searchButton}>
-            <FontAwesomeIcon icon={faSearch} color='green' />
-          </button>
+      <div className={styles.overall}>
+        <Link href="/" className='back'>
+          Back
+        </Link>
+
+        <div className={styles_search.all}>
+          <div className={styles_search.searchBarContainer}>
+            <input onChange={handleSearch} type="text" className={styles_search.searchInput} placeholder="Search for your cosmetics" />
+            <button className={styles_search.searchButton}>
+              <FontAwesomeIcon icon={faSearch} color='black' />
+            </button>
+          </div>
         </div>
-      </div>
-      <div className={styles.sug}>
-        {isLoading ? (
-          <p>Loading products...</p>
-        ) : (
-          <>
-            <h4>Suggestions</h4>
-            <div className={styles.grid}>
+          {isLoading ? (
+            <p>Loading products...</p>
+          ) : (
+            <>
+              <div className={styles.sug}>
+              <h4>Suggestions</h4> </div>
+              <div className={styles.grid}>
 
-              {filteredProducts.map((product) => (
-                <div key={product.id} className={styles.product}>
-                  <img src={`${process.env.NEXT_PUBLIC_API_BASE_URL_IMAGE}/${product?.image}.png`} alt={product.brand} />
-                  <div className={styles.productInfo}>
-                    <h5>{product.brand}</h5>
-                    <h6>{product.model}</h6>
-                    <p>฿{product.price}</p>
+                {filteredProducts.map((product) => (
+                  <div key={product.id} className={styles.product}>
+                    <img src={`${process.env.NEXT_PUBLIC_API_BASE_URL_IMAGE}/${product?.image}.png`} alt={product.brand} />
+                    <div className={styles.productInfo}>
+                      <h5>{product.brand}</h5>
+                      <h6>{product.model}</h6>
+                      <p>฿{product.price}</p>
 
 
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </>
+                ))}
+              </div>
+            </>
 
-        )}
-      </div>
-    </div>
+          )}
+        </div>
+    </>
+
   );
 };
