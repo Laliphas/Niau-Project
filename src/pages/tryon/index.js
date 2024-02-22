@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import Head from "next/head";
-import Iamge from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/Tryon.module.css";
 import { PrismaClient } from '@prisma/client';
 import Webcam from 'react-webcam';
+import * as faceapi from 'face-api.js';
 
 const prisma = new PrismaClient();
 
@@ -16,11 +17,11 @@ export async function getStaticProps() {
 }
 
 function CapturePic({ colors }) {
-    const [imageSrc, setImageSrc] = useState(); // Define image state variable
-    const [cldData, setCldData] = useState(null); // Define cldData state variable
-    const [lipColor, setLipColor] = useState(colors[0]?.color || ""); // Set default lip color
-    const [pictureTaken, setPictureTaken] = useState(false); // Track if a picture has been taken
-    const webcamRef = useRef(null); // Initialize webcamRef using useRef
+    const [imageSrc, setImageSrc] = useState();
+    const [lipColor, setLipColor] = useState(colors[0]?.color || "");
+    const [pictureTaken, setPictureTaken] = useState(false);
+    const webcamRef = useRef(null);
+    const canvasRef = useRef(null);
 
     const videoConstraints = {
         width: 1280,
@@ -28,32 +29,104 @@ function CapturePic({ colors }) {
         facingMode: "user"
     };
 
-    // Function to apply lip color filter
-    const applyLipFilter = () => {
+    useEffect(() => {
+        loadModels();
+    }, []);
+
+    const loadModels = async () => {
+        await Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
+            faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
+            faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
+            faceapi.nets.faceExpressionNet.loadFromUri("/models")
+        ]);
+    };
+
+    const applyLipFilter = async () => {
         if (imageSrc) {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-            const img = new Image();
-            img.onload = () => {
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
-                ctx.fillStyle = lipColor;
-                // Adjust these coordinates based on the position of the lips in the image
-                ctx.fillRect(100, 100, 50, 20); // Example: Draw a rectangle representing lipstick on the lips
-                const updatedImageSrc = canvas.toDataURL('image/jpeg');
-                setImageSrc(updatedImageSrc);
+    
+            // Create a new HTML image element
+            const nextImage = document.createElement('img');
+    
+            // Set up an event listener for the image load event
+            nextImage.onload = async () => {
+                canvas.width = nextImage.width;
+                canvas.height = nextImage.height;
+                ctx.drawImage(nextImage, 0, 0);
+    
+                // Fetch the image asynchronously using faceapi
+                const img = await faceapi.fetchImage(imageSrc);
+    
+                // Detect faces in the image
+                const detections = await faceapi.detectAllFaces(img, new faceapi.TinyFaceDetectorOptions())
+                    .withFaceLandmarks()
+                    .withFaceDescriptors();
+    
+                if (detections.length > 0) {
+                    const mouth = detections[0].landmarks.getMouth();
+    
+                    // Draw a rectangle representing lipstick on the lips
+                    ctx.fillStyle = lipColor;
+                    ctx.fillRect(mouth[0].x, mouth[0].y, mouth[6].x - mouth[0].x, mouth[10].y - mouth[6].y);
+    
+                    const updatedImageSrc = canvas.toDataURL('image/jpeg');
+                    setImageSrc(updatedImageSrc);
+                }
             };
-            img.src = imageSrc;
-        }        
+            // Set the src attribute of the image to the imageSrc
+            nextImage.src = imageSrc;
+        }
     };
+    
+    const faceMyDetect = async (imageSrc) => {
+        if (imageSrc) {
+            const img = await faceapi.fetchImage(imageSrc);
+            const detections = await faceapi.detectAllFaces(img,
+                new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
+            
+            console.log("Detected faces:", detections.length);
+            const canvas = canvasRef.current;
+            const ctx = canvas.getContext('2d');
+    
+            canvas.width = img.width;
+            canvas.height = img.height;
+    
+            faceapi.matchDimensions(canvas, {
+                width: img.width,
+                height: img.height
+            });
+    
+            const resizedDetections = faceapi.resizeResults(detections, {
+                width: img.width,
+                height: img.height
+            });
 
-    // index.js
-    const handleCaptureScreenshot = async () => {
-        const image = webcamRef.current?.getScreenshot(); // Use optional chaining to avoid errors if webcamRef.current is null
-        setImageSrc(image);
-        setPictureTaken(true); // Indicate that a picture has been taken
+            resizedDetections.forEach(detection => {
+                const mouth = detection.landmarks.getMouth();
+        
+                // Draw a rectangle around the mouth
+                const mouthRect = new faceapi.Rect(mouth[0].x, mouth[0].y, mouth[6].x - mouth[0].x, mouth[10].y - mouth[6].y);
+                faceapi.draw.drawDetections(canvas, [mouthRect]);
+              });
+    
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            faceapi.draw.drawDetections(canvas, resizedDetections);
+            faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+            faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
+        }
     };
+    
+    const handleCaptureScreenshot = async () => {
+        const image = webcamRef.current.getScreenshot();
+        setImageSrc(image);
+        setPictureTaken(true);
+        faceMyDetect(image);
+    };
+    
+    
+    
 
     return (
         <div>
@@ -62,19 +135,20 @@ function CapturePic({ colors }) {
             </Head>
             <div className={styles.insertImage}>
                 <input id="file" type="file" accept="image/*" style={{ display: 'none' }} />
-                {imageSrc && <img src={imageSrc} alt="Cap Image" />}
+                {imageSrc && <img src={imageSrc} alt="Captured Image" />}
                 {!imageSrc && <Webcam
                     audio={false}
                     height={500}
                     screenshotFormat="image/jpeg"
                     width={500}
                     videoConstraints={videoConstraints}
-                    ref={webcamRef} // Assign webcamRef to the ref prop
+                    ref={webcamRef}
                 />}
                 <button onClick={handleCaptureScreenshot}>Capture photo</button>
-                <button onClick={() => { setImageSrc(null); setCldData(null); setPictureTaken(false); }} color="red"> {/* Fix setting image state to null */}
+                <button onClick={() => { setImageSrc(null); setPictureTaken(false); }} color="red">
                     Reset
                 </button>
+
                 {pictureTaken && (
                     <div className={styles.colorSelection}>
                         <select value={lipColor} onChange={(e) => setLipColor(e.target.value)}>
@@ -85,6 +159,8 @@ function CapturePic({ colors }) {
                         <button onClick={applyLipFilter}>Apply Lip Filter</button>
                     </div>
                 )}
+
+                <canvas ref={canvasRef} style={{ display: 'none' }} />
             </div>
         </div>
     );
