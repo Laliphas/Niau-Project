@@ -86,7 +86,7 @@ export default function ProductDetails() {
     return (
         <div className={styles.container}>
             <div className={styles.box}>
-                <Link href="/" className={styles.back}>
+                <Link href="/recommended" className={styles.back}>
                     Back
                 </Link>
                 <div className={styles.header}>
