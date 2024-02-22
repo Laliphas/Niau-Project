@@ -33,11 +33,6 @@ model ProductDetail {
   price       Float
 }
 
-model CapturedImage {
-  id        Int    @id @default(autoincrement())
-  imageData String
-}
-
 enum type {
   admin
   user
