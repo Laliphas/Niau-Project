@@ -1,70 +1,37 @@
-
-.sug{
-  position: absolute;
-  text-align: left;
-  margin-left: 5%;
-  font-size: 200%;
-}
-CSS
-.body {
-  background-color: #fff;
+.container {
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-.sug {
-  border: 5px solid #ddd;
-  border-radius: 20px;
-  padding: 16px;
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 60px;
+  font-size: 22px;
 }
 
-.sug h4 {
-  margin-top: 0;
-  margin-bottom: 16px;
-}
-
-.product {
+.main {
   display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  cursor: pointer;
+  justify-content: center;
+  gap: 10px;
 }
 
-.product:hover {
-  background-color: #f7f7f7;
+.section {
+  margin-top: 50;
+  font-family: 'Work Sans', sans-serif;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
 }
 
-.product img {
-  width: 60px;
-  height: 80px;
-  margin-right: 16px;
-}
-
-.productInfo {
-  flex-grow: 1;
-}
-
-.productInfo h5 {
-  margin-top: 20px;
-  margin-bottom: 8px;
-}
-
-.productInfo h6 {
-  margin-top: 0;
-  margin-bottom: 4px;
-  color: #777;
-}
-
-.productInfo p {
-  margin-top: 0;
-  font-weight: bold;
-}
-.grid{
-  display: grid;
-  grid-template-columns: auto auto;
-}
-.overall{
-  width: 80%;
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+  margin-bottom: 20px;
 }

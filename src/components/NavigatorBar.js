@@ -6,7 +6,7 @@ export default function Navigator() {
             <div className={styles.navbarContainer}>
                 <div className={styles.navbox}>
                     <img src="home.svg" />
-                    <Link href="/home"> Home</Link></div>
+                    <Link href="/"> Home</Link></div>
 
                 <div className={styles.navbox}>
                     <img src="recom.svg" />

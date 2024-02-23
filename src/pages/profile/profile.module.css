@@ -1,0 +1,38 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 50px;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatar {
+    margin-right: 20px;
+  }
+  
+  .image {
+    border-radius: 50%;
+  }
+  
+  .details {
+    flex: 1;
+  }
+  
+  .name {
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+  
+  .email {
+    color: #777;
+    margin-bottom: 10px;
+  }
+  
+  .bio {
+    font-size: 16px;
+  }
+  
