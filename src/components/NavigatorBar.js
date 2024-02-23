@@ -8,6 +8,7 @@ export default function Navigator(){
             <Link href="/recommended"> Recommended</Link>
             <Link href="/search" > Search</Link>
             <Link href="/profile">Profile</Link>
+            <Link href="/tryon">Try on</Link>
 
          </div>
     </nav>

@@ -1,25 +1,25 @@
-.navbar {
+.heading {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   background-color: #fbdcce;
+  justify-content: center;
   color: black;
   height: 50px;
   padding: 0 10px;
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
 }
 
-.navbar a {
+.heading a {
   color: black;
   text-decoration: none;
   padding: 0 10px;
   font-size: 16px;
 }
 
-.navbar a:hover {
+.heading a:hover {
   background-color: #666;
 }
