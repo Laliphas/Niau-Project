@@ -6,7 +6,7 @@ import styles from "@/styles/Tryon.module.css";
 
 import { PrismaClient } from '@prisma/client';
 import Webcam from 'react-webcam';
-import { saveCapturedImage } from '@/pages/tryon/prismaClient'; // Import saveCapturedImage from prismaClient.js
+import * as faceapi from 'face-api.js';
 
 
 const prisma = new PrismaClient();
@@ -129,10 +129,12 @@ function ImageUploader({ colors }) {
 }
 
 function CapturePic({ colors }) {
-    const [imageSrc, setImageSrc] = useState(); // Define image state variable
-    const [cldData, setCldData] = useState(null); // Define cldData state variable
-    const [lipColor, setLipColor] = useState(colors[0]?.color || ""); // Set default lip color
-    const webcamRef = useRef(null); // Initialize webcamRef using useRef
+    const [imageSrc, setImageSrc] = useState();
+    const [lipColor, setLipColor] = useState(colors[0]?.color || "");
+    const [pictureTaken, setPictureTaken] = useState(false);
+    const [faceDetected, setFaceDetected] = useState(false);
+    const webcamRef = useRef(null);
+    const canvasRef = useRef(null);
 
     const videoConstraints = {
         width: 500,
@@ -141,56 +143,136 @@ function CapturePic({ colors }) {
     };
 
     useEffect(() => {
-        if (!imageSrc) return;
+        loadModels();
+    }, []);
 
-        const fetchData = async () => {
-            try {
-                const response = await fetch('/api/upload', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        image: imageSrc // Correct variable name
-                    })
-                });
-                const data = await response.json();
-                setCldData(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+    const loadModels = async () => {
+        await Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
+            faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
+            faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
+            faceapi.nets.faceExpressionNet.loadFromUri("/models")
+        ]);
+    };
 
-        fetchData();
-    }, [imageSrc]);
+    const applyLipFilter = async () => {
+        if (imageSrc) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+    
+            // Create a new HTML image element
+            const nextImage = document.createElement('img');
+    
+            // Set up an event listener for the image load event
+            nextImage.onload = async () => {
+                canvas.width = nextImage.width;
+                canvas.height = nextImage.height;
+                ctx.drawImage(nextImage, 0, 0);
+    
+                // Fetch the image asynchronously using faceapi
+                const img = await faceapi.fetchImage(imageSrc);
+    
+                // Detect faces in the image
+                const detections = await faceapi.detectAllFaces(img, new faceapi.TinyFaceDetectorOptions())
+                    .withFaceLandmarks()
+                    .withFaceDescriptors();
+    
+                if (detections.length > 0) {
+                    const mouth = detections[0].landmarks.getMouth();
 
-    const handleCaptureScreenshot = async () => {
-        const image = webcamRef.current?.getScreenshot(); // Use optional chaining to avoid errors if webcamRef.current is null
-        setImageSrc(image);
-        console.log('image', image);
-        if (image) {
-            try {
-                await saveCapturedImage(image); // Save captured image to Prisma database
-            } catch (error) {
-                console.error('Error saving captured image:', error);
-            }
+                    ctx.fillStyle = lipColor;
+                    ctx.beginPath();
+                    ctx.moveTo(mouth[0].x, mouth[0].y);
+                    for (let i = 1; i < mouth.length; i++) {
+                        ctx.lineTo(mouth[i].x, mouth[i].y);
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+    
+                    const updatedImageSrc = canvas.toDataURL('image/jpeg');
+                    setImageSrc(updatedImageSrc);
+                }
+            };
+            // Set the src attribute of the image to the imageSrc
+            nextImage.src = imageSrc;
         }
     };
+    
+    const faceMyDetect = async (imageSrc) => {
+        if (imageSrc) {
+            const img = await faceapi.fetchImage(imageSrc);
+            const detections = await faceapi.detectAllFaces(img,
+                new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
+            
+            console.log("Detected faces:", detections.length);
+            const canvas = canvasRef.current;
+            const ctx = canvas.getContext('2d');
+    
+            canvas.width = img.width;
+            canvas.height = img.height;
+    
+            faceapi.matchDimensions(canvas, {
+                width: img.width,
+                height: img.height
+            });
+    
+            const resizedDetections = faceapi.resizeResults(detections, {
+                width: img.width,
+                height: img.height
+            });
+
+            resizedDetections.forEach(detection => {
+                const mouth = detection.landmarks.getMouth();
+                const ctx = canvas.getContext('2d');
+
+                // Draw mouth shape
+                ctx.beginPath();
+                ctx.moveTo(mouth[0].x, mouth[0].y);
+                for (let i = 1; i < mouth.length; i++) {
+                    ctx.lineTo(mouth[i].x, mouth[i].y);
+                }
+                ctx.closePath();
+            });
+            
+            setFaceDetected(resizedDetections.length > 0); // Update face detection status
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            faceapi.draw.drawDetections(canvas, resizedDetections);
+            faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+            faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
+        }
+    };
+    
+    const handleCaptureScreenshot = async () => {
+        const image = webcamRef.current.getScreenshot();
+        setImageSrc(image);
+        setPictureTaken(true);
+        faceMyDetect(image);
+    };
+    
+    
+    
 
     return (
         <div>
+<<<<<<< HEAD
             <Head>
                 <title>TryOn | niau</title>
             </Head>
         
+=======
+>>>>>>> dedc6c882fa1fb0016c94540192ed820075b9203
             <div className={styles.insertImage}>
                 <input id="file" type="file" accept="image/*" style={{ display: 'none' }} />
-                {imageSrc && <img src={imageSrc} alt="Uploaded Image" />}
+                {imageSrc && <img src={imageSrc} alt="Captured Image" />}
                 {!imageSrc && <Webcam
                     audio={false}
                     height={400}
                     screenshotFormat="image/jpeg"
                     width={400}
                     videoConstraints={videoConstraints}
-                    ref={webcamRef} // Assign webcamRef to the ref prop
+                    ref={webcamRef}
                 />}
+<<<<<<< HEAD
                 
                 <select value={lipColor} onChange={(e) => setLipColor(e.target.value)}>
                     {colors.map((color) => (
@@ -202,6 +284,26 @@ function CapturePic({ colors }) {
                 <button onClick={() => { setImageSrc(null); setCldData(null); }} color="red"> {/* Fix setting image state to null */}
                     Reset
                 </button>
+=======
+                <button onClick={handleCaptureScreenshot}>Capture photo</button>
+                <button onClick={() => { setImageSrc(null); setPictureTaken(false); }} color="red">
+                    Reset
+                </button>
+
+                {pictureTaken && (
+                    <div className={styles.colorSelection}>
+                        <p className='styles.Detect'>{faceDetected ? 'We found you' : 'No face detected. Please try again'}</p>
+                        <select value={lipColor} onChange={(e) => setLipColor(e.target.value)}>
+                            {colors.map((color) => (
+                                <option key={color.productID} value={color.color}>{color.color}</option>
+                            ))}
+                        </select>
+                        <button onClick={applyLipFilter}>Apply Lip Filter</button>
+                    </div>
+                )}
+
+                <canvas ref={canvasRef} style={{ display: 'none' }} />
+>>>>>>> dedc6c882fa1fb0016c94540192ed820075b9203
             </div>
             <div className={styles.insertbotton}>
                     <button onClick={handleCaptureScreenshot}><img src="/CameraTryon.png"
@@ -222,8 +324,12 @@ export default function Tryon({ colors }) {
         </div>
         
     );
+<<<<<<< HEAD
 }
 
 
 
 
+=======
+}
+>>>>>>> dedc6c882fa1fb0016c94540192ed820075b9203

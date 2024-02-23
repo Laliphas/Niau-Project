@@ -18,10 +18,11 @@
   }
   
   .product {
-    width: 300px;
+    width: 85%;
+    max-width: 350px;
     margin: 10px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 5px solid #ccc;
     border-radius: 4px;
     text-align: center;
   }
@@ -39,3 +40,19 @@
   .product p {
     margin-top: 5px;
   }
+  .grid{
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+  .overall{
+    width: 95%;
+  }
+  
+.sug {
+  border-radius: 20px;
+  padding: 16px;
+  margin-top: 0 auto;
+}
