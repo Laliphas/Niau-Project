@@ -28,8 +28,8 @@
 
 .insertImage img {
     margin-top: 20px;
-    width: 400px; /* Set a fixed width for the image */
-    height: 400px; /* Maintain aspect ratio */
+    width: 480px; /* Set a fixed width for the image */
+    height: 360px; /* Maintain aspect ratio */
     border-radius: 5px;
     
 }

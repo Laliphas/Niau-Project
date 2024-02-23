@@ -142,9 +142,6 @@ function CapturePic({ product }) {
         setPictureTaken(true);
         faceMyDetect(image);
     };
-    
-    
-    
 
     return (
         <div>
@@ -159,11 +156,7 @@ function CapturePic({ product }) {
                     videoConstraints={videoConstraints}
                     ref={webcamRef}
                 />}
-                <div className={styles.insertbotton}>
-                    <button onClick={handleCaptureScreenshot}><img src="/CameraTryon.png"
-                    width={20} height={20} alt="not found"/></button>
-                 
-                </div>
+
                 <button onClick={() => { setImageSrc(null); setPictureTaken(false); }} color="red">
                     Reset
                 </button>
@@ -172,7 +165,7 @@ function CapturePic({ product }) {
                     <div className={styles.colorSelection}>
                         <p className='styles.Detect'>{faceDetected ? 'We found you' : 'No face detected. Please try again'}</p>
                 {product && (
-                    <div>
+                    <div className='style.colorbox'>
                         {product.map((productItem) => (
                             <button
                                 key={productItem.productID}
@@ -186,6 +179,11 @@ function CapturePic({ product }) {
                 )}
 
                 <canvas ref={canvasRef} style={{ display: 'none' }} />
+            </div>
+            <div className={styles.insertbotton}>
+                    <button onClick={handleCaptureScreenshot}><img src="/CameraTryon.png"
+                    width={50} height={50} alt="not found"/></button>
+                 
             </div>
         </div>
     );
