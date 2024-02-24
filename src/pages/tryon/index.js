@@ -27,14 +27,9 @@ function CapturePic({ product }) {
 
     
     const videoConstraints = {
-<<<<<<< HEAD
         
         width: 1280,
         height: 1280,
-=======
-        width: 1280,
-        height: 720,
->>>>>>> 8387bf762f0430170a9a6af830a53157388cbc51
         facingMode: "user"
     };
 
@@ -157,26 +152,14 @@ function CapturePic({ product }) {
                 {imageSrc && <img src={imageSrc} alt="Captured Image" />}
                 {!imageSrc && <Webcam
                     audio={false}
-<<<<<<< HEAD
                     height={380}
                     screenshotFormat="image/jpeg"
                     width={600}
-=======
-                    height={500}
-                    screenshotFormat="image/jpeg"
-                    width={500}
->>>>>>> 8387bf762f0430170a9a6af830a53157388cbc51
                     videoConstraints={videoConstraints}
                     ref={webcamRef}
                 />}
 
-<<<<<<< HEAD
                 
-=======
-                <button onClick={() => { setImageSrc(null); setPictureTaken(false); }} color="red">
-                    Reset
-                </button>
->>>>>>> 8387bf762f0430170a9a6af830a53157388cbc51
 
                 {pictureTaken && (
                     <div className={styles.colorSelection}>
@@ -189,10 +172,7 @@ function CapturePic({ product }) {
                                 style={{ backgroundColor: productItem.color, width: '30px', height: '30px', margin: '5px' }}
                                 onClick={() => setLipColor(productItem.color)}
                             ></button>
-<<<<<<< HEAD
                             
-=======
->>>>>>> 8387bf762f0430170a9a6af830a53157388cbc51
                         ))}
                     </div>
                 )}
@@ -200,7 +180,6 @@ function CapturePic({ product }) {
                 )}
 
                 <canvas ref={canvasRef} style={{ display: 'none' }} />
-<<<<<<< HEAD
                 
             </div>
             <div className={styles.insertreset}>
@@ -209,8 +188,6 @@ function CapturePic({ product }) {
                     width={5} height={5} alt="not found"/>
                 </button>
               
-=======
->>>>>>> 8387bf762f0430170a9a6af830a53157388cbc51
             </div>
             <div className={styles.insertbotton}>
             
@@ -220,10 +197,7 @@ function CapturePic({ product }) {
                     
                  
             </div>
-<<<<<<< HEAD
         
-=======
->>>>>>> 8387bf762f0430170a9a6af830a53157388cbc51
         </div>
     );
 }
