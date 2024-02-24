@@ -5,7 +5,7 @@ export default function TryonBar({slug}) {
         <div className={styles.tryonbar}>
             <div className={styles.tryonContainer}>
                 <div className={styles.tryonbox}>
-                    <img src="/tryOnIcon.png" width={100} height={100} />
+                    <img src="/tryon.png" width={30} height={30} />
                     <Link href={`/tryon/${slug}`}>Try On</Link></div>
             </div>
         </div>
