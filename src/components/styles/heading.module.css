@@ -14,11 +14,22 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: #fbdcce;
+  background-color: #F6C270;
   justify-content: center;
+<<<<<<< HEAD
   align-items: center;
   width: 100%;
   gap: 30px;
+=======
+  color: black;
+  height: 50px;
+  padding: 0 10px;
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  right: 0;
+>>>>>>> 8387bf762f0430170a9a6af830a53157388cbc51
 }
 
 .heading a {
