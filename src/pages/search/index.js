@@ -76,6 +76,7 @@ export default function Product() {
               <div className={styles.grid}>
 
                 {filteredProducts.map((product) => (
+                 <Link key={product.id} href={`/productDetails/${product?.model}`} className={styles.box}>
                   <div key={product.id} className={styles.product}>
                     <img src={`${process.env.NEXT_PUBLIC_API_BASE_URL_IMAGE}/${product?.image}.png`} alt={product.brand} />
                     <div className={styles.productInfo}>
@@ -83,9 +84,9 @@ export default function Product() {
                       <h6>{product.model}</h6>
                       <p>฿{product.price}</p>
 
-
                     </div>
                   </div>
+                </Link>
                 ))}
               </div>
             </>
