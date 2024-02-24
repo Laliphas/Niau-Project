@@ -1,16 +1,24 @@
-.heading {
+.heading{
+  position: fixed;
+  top: 0;
+  margin: 0;
+  left: 0;
+  z-index: 99999;
+  padding: 1px;
+  width: 100%;
+  height: fit-content;
+  background-color:#F6C270;
+  color: black;
+}
+.headingContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
   background-color: #fbdcce;
   justify-content: center;
-  color: black;
-  height: 50px;
-  padding: 0 10px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  align-items: center;
+  width: 100%;
+  gap: 30px;
 }
 
 .heading a {
@@ -22,4 +30,10 @@
 
 .heading a:hover {
   background-color: #666;
+}
+.heading{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

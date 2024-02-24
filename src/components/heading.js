@@ -5,8 +5,8 @@ export default function heading(){
     return(
     <heading>
         <div className={styles.heading}>
-        <img src="/niaulogo.png"
-                width={100} height={100} alt="not found"/>
+        <img src="/niau2.png"
+                width={100} height={55} alt="not found"/>
 
          </div>
     </heading>
