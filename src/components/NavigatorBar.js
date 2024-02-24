@@ -5,19 +5,19 @@ export default function Navigator() {
         <div className={styles.navbar}>
             <div className={styles.navbarContainer}>
                 <div className={styles.navbox}>
-                    <img src="home.svg" />
+                    <img src="/home.svg" />
                     <Link href="/"> Home</Link></div>
 
                 <div className={styles.navbox}>
-                    <img src="recom.svg" />
+                    <img src="/recom.svg" />
                     <Link href="/recommended"> Recommended</Link></div>
 
                 <div className={styles.navbox}>
-                    <img src="search.svg" />
+                    <img src="/search.svg" />
                     <Link href="/search" > Search</Link></div>
 
                 <div className={styles.navbox}>
-                    <img src="user.svg" />
+                    <img src="/user.svg" />
                     <Link href="/profile">Profile</Link></div>
 
             </div>

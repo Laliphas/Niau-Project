@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import styles from "./productDetails.module.css";
 import Link from "next/link";
 import axios from 'axios';
-import TryonBar from '@/components/tryonbar';
+import TryonBar from '../../components/Tryonbar';
 
 export default function ProductDetails() {
     const router = useRouter();
@@ -85,7 +85,7 @@ export default function ProductDetails() {
 
     return (
     <>
-        <TryonBar/>
+        <TryonBar slug={slug}/>
             <div className={styles.container}>
                 <div className={styles.box}>
                     <Link href="/recommended" className={styles.back}>
