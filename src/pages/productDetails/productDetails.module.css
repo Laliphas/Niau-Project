@@ -8,6 +8,7 @@
     color: #1E1E1E;
     font-size: 16px;
     font-weight: 400;
+    margin-top: 40px;
 }
 .box{
     width: 20%;
@@ -88,6 +89,7 @@
     font-size: 18px;
     font-weight: 700;
     margin-top: 10px;
+    
 }
 .colorCode{
     margin-left: 10px;
