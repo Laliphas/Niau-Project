@@ -1,8 +1,7 @@
-
 .Detect{
   position: absolute;
   display: flex;
-  order: 1;
+  margin-top: auto;
   flex-direction: column;
   align-items: center;
   padding: 0px;
@@ -11,7 +10,6 @@
 }
 
 .detect{
-  order: 2;
   position: fixed;
   font-family: 'Work Sans', sans-serif;
   margin-top: 332px;

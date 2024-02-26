@@ -1,20 +1,25 @@
-import { useState, useEffect, useRef } from 'react'; // Added 'useRouter'
+import { useState, useEffect, useRef } from 'react';
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/Tryon.module.css";
+<<<<<<< HEAD
 import Detect from "../../components/Detect"
+=======
+>>>>>>> 624ce6a883e6a98c6325aaac003b53fd8775ec88
 import { PrismaClient } from '@prisma/client';
 import Webcam from 'react-webcam';
 import * as faceapi from 'face-api.js';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import Detect from '@/components/Detect';
 
 function CapturePic({ product }) {
     const [imageSrc, setImageSrc] = useState();
     const [lipColor, setLipColor] = useState(product[0]?.color || "");
     const [pictureTaken, setPictureTaken] = useState(false);
     const [faceDetected, setFaceDetected] = useState(false);
+    const [showAllColors, setShowAllColors] = useState(false); // State to manage whether to show all colors or not
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
 
@@ -78,8 +83,6 @@ function CapturePic({ product }) {
         }
     };
     
-    
-
     const faceMyDetect = async (imageSrc) => {
         if (imageSrc) {
             const img = await faceapi.fetchImage(imageSrc);
@@ -133,6 +136,7 @@ function CapturePic({ product }) {
     return (
         
         <div className={styles.container}>
+            <Detect/>
             <div>
            
             
@@ -149,23 +153,51 @@ function CapturePic({ product }) {
                 
                 {pictureTaken && (
                     <div >
+<<<<<<< HEAD
                         
+=======
+>>>>>>> 624ce6a883e6a98c6325aaac003b53fd8775ec88
                         <p className={styles.Detect}>{faceDetected ? 'We found you' : 'No face detected. Please try again'}</p>
                         {product && (
-                            <div className={styles.insertcolor}>
-                                <img src="/color.png" width={50} height={50}/>
-                            {product.map((productItem) => (
-                                <button 
-                                 
-                                    key={productItem.productID}
-                                    className={styles.colorbotton}
-                                    style={{ backgroundColor: productItem.color, width: '50px', height: '50px', margin: '5px' }}
-                                    onClick={() => {
-                                        setLipColor(productItem.color);
-                                        applyLipFilter(); // Call applyLipFilter function here
-                                    }}
-                                ></button>
-                            ))}
+                            <div className={styles.colorbox} style={{ display: 'flex', flexWrap: 'wrap' }}>
+                            {showAllColors ? (
+                                <div className={styles.colorbox}>
+                                    {product.map((productItem) => (
+                                        <button
+                                            key={productItem.productID}
+                                            style={{ backgroundColor: productItem.color, width: '30px', height: '30px', margin: '5px' }}
+                                            onClick={() => {
+                                                setLipColor(productItem.color);
+                                                applyLipFilter(); // Call applyLipFilter function here
+                                            }}
+                                        ></button>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className={styles.colorbox}>
+                                    {product.slice(0, 3).map((productItem) => (
+                                        <button
+                                            key={productItem.productID}
+                                            style={{ backgroundColor: productItem.color, width: '30px', height: '30px', margin: '5px' }}
+                                            onClick={() => {
+                                                setLipColor(productItem.color);
+                                                applyLipFilter(); // Call applyLipFilter function here
+                                            }}
+                                        ></button>
+                                    ))}
+                                </div>
+                            )}
+
+                            {product.length > 3 && (
+                                <>  
+                                <br/>
+                                    <button onClick={() => setShowAllColors(!showAllColors)}>
+                                        {showAllColors ? 'Show less colors' : `Show ${product.length - 3} more colors`}
+                                    </button>
+                                    
+                                </>
+                            )}
+
                         </div>
                         
                         )}
@@ -227,4 +259,7 @@ export default function Tryon() {
        </>
     );
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 624ce6a883e6a98c6325aaac003b53fd8775ec88
