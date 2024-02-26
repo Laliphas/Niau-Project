@@ -3,10 +3,6 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/Tryon.module.css";
-<<<<<<< HEAD
-import Detect from "../../components/Detect"
-=======
->>>>>>> 624ce6a883e6a98c6325aaac003b53fd8775ec88
 import { PrismaClient } from '@prisma/client';
 import Webcam from 'react-webcam';
 import * as faceapi from 'face-api.js';
@@ -138,8 +134,8 @@ function CapturePic({ product }) {
         <div className={styles.container}>
             <Detect/>
             <div>
-           
             
+              
                 <input id="file" type="file" accept="image/*" style={{ display: 'none' }} />
                 {imageSrc && <img src={imageSrc} alt="Captured Image" />}
                 {!imageSrc && <Webcam
@@ -153,19 +149,19 @@ function CapturePic({ product }) {
                 
                 {pictureTaken && (
                     <div >
-<<<<<<< HEAD
-                        
-=======
->>>>>>> 624ce6a883e6a98c6325aaac003b53fd8775ec88
+                        <div className={styles.colorimg} >
+                        <img src="/color.png" width={60} height={60} alt="not found"/>
+                        </div>
+                     
                         <p className={styles.Detect}>{faceDetected ? 'We found you' : 'No face detected. Please try again'}</p>
                         {product && (
-                            <div className={styles.colorbox} style={{ display: 'flex', flexWrap: 'wrap' }}>
+                            <div className={styles.insertcolor} style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {showAllColors ? (
                                 <div className={styles.colorbox}>
                                     {product.map((productItem) => (
                                         <button
                                             key={productItem.productID}
-                                            style={{ backgroundColor: productItem.color, width: '30px', height: '30px', margin: '5px' }}
+                                            style={{ backgroundColor: productItem.color, width: '40px', height: '40px', margin: '5px' }}
                                             onClick={() => {
                                                 setLipColor(productItem.color);
                                                 applyLipFilter(); // Call applyLipFilter function here
@@ -174,11 +170,13 @@ function CapturePic({ product }) {
                                     ))}
                                 </div>
                             ) : (
+                                
                                 <div className={styles.colorbox}>
+
                                     {product.slice(0, 3).map((productItem) => (
                                         <button
                                             key={productItem.productID}
-                                            style={{ backgroundColor: productItem.color, width: '30px', height: '30px', margin: '5px' }}
+                                            style={{ backgroundColor: productItem.color, width: '50px', height: '50px', margin: '5px' }}
                                             onClick={() => {
                                                 setLipColor(productItem.color);
                                                 applyLipFilter(); // Call applyLipFilter function here
@@ -191,7 +189,9 @@ function CapturePic({ product }) {
                             {product.length > 3 && (
                                 <>  
                                 <br/>
-                                    <button onClick={() => setShowAllColors(!showAllColors)}>
+                                    <button onClick={() => setShowAllColors(!showAllColors)}
+                                     className={styles.showlesscolor}
+                                    >
                                         {showAllColors ? 'Show less colors' : `Show ${product.length - 3} more colors`}
                                     </button>
                                     
@@ -249,7 +249,7 @@ export default function Tryon() {
 
     return (
         <>
-        <Detect/>
+        
         <div>
         <Head>
             <title>TryOn | niau</title>
@@ -259,7 +259,3 @@ export default function Tryon() {
        </>
     );
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 624ce6a883e6a98c6325aaac003b53fd8775ec88
