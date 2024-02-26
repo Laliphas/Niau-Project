@@ -28,9 +28,9 @@
 }
 
 .insertImage img {
-    margin-top: 22px;
+    margin-top: 0px;
     width: 600; /* Set a fixed width for the image */
-    height: 380; /* Maintain aspect ratio */
+    height: 390; /* Maintain aspect ratio */
     border-radius: 5px;
     
 }
@@ -56,11 +56,13 @@
 /* Tryon.module.css */
 
 .colorBox {
+    
+    
     width: 50px;
     height: 50px;
     margin-top: 10px;
     border-radius: 60px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0.1);
 }
 .insertbotton{
     display: flex;
@@ -71,7 +73,7 @@
     
 }
 .insertbotton button {
-    margin-top: 100px;
+    margin-top: 60px;
     background-color: #f6f1ee;
     color: black;
     border: none;
@@ -171,4 +173,68 @@
 
 /* Tryon.module.css */
 
+.insertcolor{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    position: absolute;
+    bottom: 75px;
+    right: 80px;
+    
+    
+}
+.insertcolor button {
+    margin-top: 0px;
+    background-color: #f6f1ee;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
 
+.insertcolor button:hover {
+    background-color: #fbdcce;
+  
+}
+
+.insertcolor input[type="file"] {
+    display: none;
+}
+
+.insertcolorimg {
+    margin-top: 5px;
+    width: 30px; /* Set a fixed width for the image */
+    height: 30px; /* Maintain aspect ratio */
+    border-radius: 5px;
+    
+}
+
+.insertcolor select {
+    margin-top: 0px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.insertcolor select:focus {
+    outline: none;
+}
+
+.insertcolor select option {
+    padding: 10px;
+}
+
+.insertcolor select option:hover {
+    background-color: #f0f0f0;
+}
+.Detect{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    
+}
+.X{
+  position: absolute;
+  top: 1px;
+}

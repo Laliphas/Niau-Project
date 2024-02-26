@@ -9,6 +9,7 @@ export default function heading(){
                 width={100} height={55} alt="not found"/>
 
          </div>
+         
     </heading>
 
        

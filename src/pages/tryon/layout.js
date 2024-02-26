@@ -5,6 +5,7 @@ export default function Layout({children}){
         <div>
              <Navigator/>
              <Heading/>
+             
             {children}
             
         </div>
