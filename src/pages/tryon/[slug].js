@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/Tryon.module.css";
+import Detect from "@/components/styles/detect.module.css"
 import { PrismaClient } from '@prisma/client';
 import Webcam from 'react-webcam';
 import * as faceapi from 'face-api.js';
@@ -134,15 +135,16 @@ function CapturePic({ product }) {
                 {imageSrc && <img src={imageSrc} alt="Captured Image" />}
                 {!imageSrc && <Webcam
                     audio={false}
-                    height={380}
+                    height={360}
                     screenshotFormat="image/jpeg"
                     width={600}
                     videoConstraints={videoConstraints}
                     ref={webcamRef}
                 />}
-
+                
                 {pictureTaken && (
-                    <div className={styles.colorSelection}>
+                    <div >
+                        <Detect/>
                         <p className={styles.Detect}>{faceDetected ? 'We found you' : 'No face detected. Please try again'}</p>
                         {product && (
                             <div className={styles.colorbox} style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -189,9 +191,10 @@ function CapturePic({ product }) {
                         )}
                     </div>
                 )}
-
+                
                 <canvas ref={canvasRef} style={{ display: 'none' }} />
             </div>
+            
             <div className={styles.insertreset}>
                 <button onClick={() => { setImageSrc(null); setPictureTaken(false); }} color="red">
                     <img src="/reset.png" width={5} height={5} alt="not found"/>
@@ -203,6 +206,7 @@ function CapturePic({ product }) {
                 </button>
             </div>
         </div>
+        
     );
 }
 
