@@ -1,3 +1,4 @@
+import Detect from "@/components/Detect"
 import Navigator from "../../components/NavigatorBar"
 import Heading from "@/components/heading"
 export default function Layout({children}){
@@ -5,7 +6,7 @@ export default function Layout({children}){
         <div>
              <Navigator/>
              <Heading/>
-             
+            
             {children}
             
         </div>

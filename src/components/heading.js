@@ -7,7 +7,7 @@ export default function heading(){
         <div className={styles.heading}>
         <img src="/niau2.png"
                 width={100} height={55} alt="not found"/>
-
+       
          </div>
          
     </heading>
