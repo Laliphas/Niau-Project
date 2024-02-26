@@ -3,12 +3,12 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/Tryon.module.css";
-import Detect from "@/components/styles/detect.module.css"
 import { PrismaClient } from '@prisma/client';
 import Webcam from 'react-webcam';
 import * as faceapi from 'face-api.js';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import Detect from '@/components/Detect';
 
 function CapturePic({ product }) {
     const [imageSrc, setImageSrc] = useState();
@@ -130,6 +130,7 @@ function CapturePic({ product }) {
 
     return (
         <div className={styles.container}>
+            <Detect/>
             <div>
                 <input id="file" type="file" accept="image/*" style={{ display: 'none' }} />
                 {imageSrc && <img src={imageSrc} alt="Captured Image" />}
@@ -144,7 +145,6 @@ function CapturePic({ product }) {
                 
                 {pictureTaken && (
                     <div >
-                        <Detect/>
                         <p className={styles.Detect}>{faceDetected ? 'We found you' : 'No face detected. Please try again'}</p>
                         {product && (
                             <div className={styles.colorbox} style={{ display: 'flex', flexWrap: 'wrap' }}>
