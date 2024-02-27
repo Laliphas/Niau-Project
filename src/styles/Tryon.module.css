@@ -181,11 +181,10 @@
    
 }
 .colorimg{
-    transform: translate(0%, 15%);
+    transform: translate(80%, 15%);
     padding: 20px;
     position: absolute;
-    bottom: 75px;
-    right: 30px;
+   
     
 }
 .showlesscolor{
@@ -194,6 +193,6 @@
     align-items: center;
     position: absolute;
     right: 250px;
-    top: 40px;
+    top: 90px;
     
 }
