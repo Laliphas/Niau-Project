@@ -1,75 +1,18 @@
-
-.insertImage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1px;
-    
-}
-
-.insertImage button {
-    margin-top: 0px;
-    padding: 0px 0px;
-    background-color: #f6f1ee;
-    color: black;
-    border: none;
-    border-radius: 0px;
-    cursor: pointer;
-}
-
-.insertImage button:hover {
-    background-color: #fbdcce;
-  
-}
-
-.insertImage input[type="file"] {
-    display: none;
-}
-
-.insertImage img {
-    margin-top: 0px;
-    width: 600; /* Set a fixed width for the image */
-    height: 390; /* Maintain aspect ratio */
-    border-radius: 5px;
-    
-}
-
-.insertImage select {
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.insertImage select:focus {
-    outline: none;
-}
-
-.insertImage select option {
-    padding: 10px;
-}
-
-.insertImage select option:hover {
-    background-color: #f0f0f0;
-}
-
 /* Tryon.module.css */
-
 .colorbox {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 0px;
-    position: absolute;
-    flex-direction: row;
-    
-    right: 40px;
     bottom: 20px;
-    margin-top: 0px;
+    right: 40px;
     border-radius: 60px;
+    
    
 }
 .colorbox button:hover {
     transform: scale(1.2);
+    margin-top: 10px;
 }
 
 .insertbotton{
@@ -77,12 +20,12 @@
     flex-direction: column;
     align-items: center;
     padding: 5px;
-    border-radius: 60px;
+    border-radius: 0px;
     
     
 }
 .insertbotton button {
-    margin-top: 90px;
+    margin-top: 85px;
     background-color: #f6f1ee;
     color: black;
     border: none;
@@ -126,9 +69,6 @@
 }
 
 .insertreset{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     padding: 0px;
     position: absolute;
     bottom: 10px;
@@ -139,7 +79,6 @@
 .insertreset button {
     margin-top: 0px;
     background-color: #f6f1ee;
-    color: black;
     border: none;
     border-radius: 50px;
     cursor: pointer;
@@ -150,9 +89,7 @@
   
 }
 
-.insertreset input[type="file"] {
-    display: none;
-}
+
 
 .insertreset img {
     margin-top: 5px;
@@ -161,40 +98,28 @@
     border-radius: 5px;
     
 }
-
-.insertreset select {
-    margin-top: 10px;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.insertreset select:focus {
-    outline: none;
-}
-
-.insertreset select option {
-    padding: 10px;
-}
-
 .insertreset select option:hover {
     background-color: #f0f0f0;
 }
 
 .Detect{
-    display: flex;
+   position: fixed;
+   left: 50%;
+   transform: translate(-50%, -20%);
     align-items: center;
     font-size: 20px;
+    color: black;
+
 }
 /* Tryon.module.css */
 
 .insertcolor{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    
     padding: 20px;
     position: absolute;
-    bottom: 75px;
-    right: 80px;
+    bottom: 65px;
+    right: 50%;
+    transform: translate(50%, 0%);
     
 }
 .insertcolor button {
@@ -241,28 +166,26 @@
     background-color: #f0f0f0;
 }
 .Detect{
-    
-    padding: 5px;
-    border-radius: 70px;
-    font-family: 'Work Sans', sans-serif;
     background-color: pink;
-    position: absolute;
+    display:flex;
+    padding: 5px;
+    border-radius: 600px;
+    font-family: 'Work Sans', sans-serif;
+    color: black;
     flex-direction: column;
     font-size: medium;
-    margin-top: -70px;
-    right: 140px;
+    margin-top: -60px;
+   align-items: center;
     
     
    
 }
 .colorimg{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    transform: translate(0%, 15%);
     padding: 20px;
     position: absolute;
     bottom: 75px;
-    right: 40px;
+    right: 30px;
     
 }
 .showlesscolor{

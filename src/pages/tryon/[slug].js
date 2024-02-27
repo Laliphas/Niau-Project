@@ -153,7 +153,9 @@ function CapturePic({ product }) {
                         <img src="/color.png" width={60} height={60} alt="not found"/>
                         </div>
                      
-                        <p className={styles.Detect}>{faceDetected ? 'We found you' : 'No face detected. Please try again'}</p>
+                        <p className={styles.Detect}
+                            
+                        >{faceDetected ? 'We found you' : 'Please try again'}</p>
                         {product && (
                             <div className={styles.insertcolor} style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {showAllColors ? (
