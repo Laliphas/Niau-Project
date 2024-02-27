@@ -13,7 +13,7 @@ export default function Home() {
           <h2>About Us</h2>
           <p>Our Group project is Cosmetics filter test for everyone who loves shopping for makeup.</p>
           <p>This application will make your life a lot easier.</p>
-          <p>For more infomation : <a href="http://niauproject.42web.io/CV.html">http://niauproject.42web.io/CV.html</a></p>
+          <p>For more infomation : <a target="_blank" href="http://niauproject.42web.io/CV.html">http://niauproject.42web.io/CV.html</a></p>
         </section>
         <section className={styles.section}>
           <h2>Contact Us</h2>
